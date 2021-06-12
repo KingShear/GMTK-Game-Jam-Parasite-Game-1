@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     float clampAngleMin = -70f;
     float rotY = 0.0f;
     float rotX = 0.0f;
+    [SerializeField]
     float jumpForce = 200.0f;
 
     //activate bools when player collides with specific powerups

@@ -1,0 +1,317 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.11f1 (99c7afb366b3) revision 10078127'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Home; OS build 19042.1052; Version 2009; 64bit' Language: 'en' Physical Memory: 24525 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.11f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/kings/Desktop/GMTK Game Jam/Big Boy Jam/Projects/GMTK-Game-Jam-Parasite-Game-1-main 001
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+62741
+Successfully changed project path to: C:/Users/kings/Desktop/GMTK Game Jam/Big Boy Jam/Projects/GMTK-Game-Jam-Parasite-Game-1-main 001
+C:/Users/kings/Desktop/GMTK Game Jam/Big Boy Jam/Projects/GMTK-Game-Jam-Parasite-Game-1-main 001
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 36.71 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.11f1 (99c7afb366b3)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/kings/Desktop/GMTK Game Jam/Big Boy Jam/Projects/GMTK-Game-Jam-Parasite-Game-1-main 001/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1660 (ID=0x2184)
+    Vendor:   
+    VRAM:     5991 MB
+    Driver:   27.21.14.6677
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56908
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.003406 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 40.21 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.590 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.008294 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.39 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.229 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 0.53 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1391 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 65.1 MB.
+System memory in use after: 65.2 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 1825.
+Total: 2.086300 ms (FindLiveObjects: 0.161300 ms CreateObjectMapping: 0.032900 ms MarkObjects: 1.817200 ms  DeleteObjects: 0.073500 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/Scenes
+  artifactKey: Guid(b6c62b56ccc22f24789b99a9f4ef5485) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes using Guid(b6c62b56ccc22f24789b99a9f4ef5485) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '09b22ed88e754492c2ebe75a3c399d71') in 0.011272 seconds
+  Import took 0.013619 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.709995 seconds.
+  path: Assets/Scenes/Platform Testing.unity
+  artifactKey: Guid(c8f02e759c62dd046ba26850ce746d6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Platform Testing.unity using Guid(c8f02e759c62dd046ba26850ce746d6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c582bbc3735fd926804447b1bd4e0eb1') in 0.019528 seconds
+  Import took 0.022034 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.568258 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.54 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  5.818 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.40 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1385 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 65.0 MB.
+System memory in use after: 65.1 MB.
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 1828.
+Total: 2.091400 ms (FindLiveObjects: 0.232100 ms CreateObjectMapping: 0.036400 ms MarkObjects: 1.800700 ms  DeleteObjects: 0.020100 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006343 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.41 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.084 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.40 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1385 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 65.0 MB.
+System memory in use after: 65.1 MB.
+
+Unloading 13 unused Assets to reduce memory usage. Loaded Objects now: 1831.
+Total: 2.227300 ms (FindLiveObjects: 0.174400 ms CreateObjectMapping: 0.034600 ms MarkObjects: 1.996500 ms  DeleteObjects: 0.020200 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 4150.692661 seconds.
+  path: Assets/Materials/Acid.mat
+  artifactKey: Guid(c80a97967c8940343b842db0f0d68ad0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Acid.mat using Guid(c80a97967c8940343b842db0f0d68ad0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae8a4946e1c719d28b84b51554cde3ac') in 0.133189 seconds
+  Import took 0.135952 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000269 seconds.
+  path: Assets/Materials/Spikes.mat
+  artifactKey: Guid(f2b9f6f3b666f1f449a461f7d2eea651) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Spikes.mat using Guid(f2b9f6f3b666f1f449a461f7d2eea651) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd848b79aa99d83f0a5bf5e788c916005') in 0.016910 seconds
+  Import took 0.019484 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000213 seconds.
+  path: Assets/Materials/Default.mat
+  artifactKey: Guid(8dbde3e668b3f3c43a8296068f385c80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Default.mat using Guid(8dbde3e668b3f3c43a8296068f385c80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b99f776dfdf2afd6f4d133333baaf847') in 0.015455 seconds
+  Import took 0.017733 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000213 seconds.
+  path: Assets/Materials/Moving Platform.mat
+  artifactKey: Guid(b75fc02e0b8a50940a6c062f60bb4e5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Moving Platform.mat using Guid(b75fc02e0b8a50940a6c062f60bb4e5a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc20d63b9ff2be5102549cf1d39afab9') in 0.019191 seconds
+  Import took 0.021783 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.323418 seconds.
+  path: Assets/Materials
+  artifactKey: Guid(31baed019af20bf4dad9e09fbe3b8d05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials using Guid(31baed019af20bf4dad9e09fbe3b8d05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c6d7da81f4ffa3414fe8dd36c8a16b2') in 0.009228 seconds
+  Import took 0.011823 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 11.459232 seconds.
+  path: Assets/Materials/JUMP Parasite Spawner.mat
+  artifactKey: Guid(7c2c9e347c26a4b47b6b513ede026e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/JUMP Parasite Spawner.mat using Guid(7c2c9e347c26a4b47b6b513ede026e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'efef8089e922e047612b7facc9da7173') in 0.015460 seconds
+  Import took 0.017989 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 47.861234 seconds.
+  path: Assets/Materials/JUMP Parasite Spawner.mat
+  artifactKey: Guid(7c2c9e347c26a4b47b6b513ede026e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/JUMP Parasite Spawner.mat using Guid(7c2c9e347c26a4b47b6b513ede026e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '497ae253410630f08c78e4efa0586c93') in 0.017360 seconds
+  Import took 0.020440 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.499359 seconds.
+  path: Assets/Materials/JUMP Parasite Spawner 1.mat
+  artifactKey: Guid(6e16e91de9e8b9c47b73a67743815bbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/JUMP Parasite Spawner 1.mat using Guid(6e16e91de9e8b9c47b73a67743815bbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd2ea344497ee079510291ffa769bcf62') in 0.024010 seconds
+  Import took 0.026535 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.390484 seconds.
+  path: Assets/Materials/SPEED Parasite.mat
+  artifactKey: Guid(6020b31890d73a54e93b9fb9f8427d27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/SPEED Parasite.mat using Guid(6020b31890d73a54e93b9fb9f8427d27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dfdafd9454f397a6c1f75ef35f959cfe') in 0.016286 seconds
+  Import took 0.018816 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.523134 seconds.
+  path: Assets/Materials/BLOCK parasite spwaner.mat
+  artifactKey: Guid(7c2c9e347c26a4b47b6b513ede026e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/BLOCK parasite spwaner.mat using Guid(7c2c9e347c26a4b47b6b513ede026e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d7e537e19c0818efd5520dc4d25a948') in 0.019313 seconds
+  Import took 0.021856 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 11.487307 seconds.
+  path: Assets/Materials/JUMP Parasite Spawner.mat
+  artifactKey: Guid(6e16e91de9e8b9c47b73a67743815bbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/JUMP Parasite Spawner.mat using Guid(6e16e91de9e8b9c47b73a67743815bbe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e62aa7c5f7cbe07f5c6b14cdcf48b683') in 0.013638 seconds
+  Import took 0.016386 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.616404 seconds.
+  path: Assets/Materials/SPEED Parasite Spawner.mat
+  artifactKey: Guid(6020b31890d73a54e93b9fb9f8427d27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/SPEED Parasite Spawner.mat using Guid(6020b31890d73a54e93b9fb9f8427d27) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2592e2078a57b7243a1d561e88e8b61') in 0.017207 seconds
+  Import took 0.019618 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 365.455958 seconds.
+  path: Assets/Materials/New Material.mat
+  artifactKey: Guid(d0fd862689ab09143a2030e4c8ce8674) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/New Material.mat using Guid(d0fd862689ab09143a2030e4c8ce8674) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34ffc7232b705c2c1f02ccc4c5d3e368') in 0.023525 seconds
+  Import took 0.026239 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 17.436030 seconds.
+  path: Assets/Materials/Rotating Spike Platforms.mat
+  artifactKey: Guid(d0fd862689ab09143a2030e4c8ce8674) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Rotating Spike Platforms.mat using Guid(d0fd862689ab09143a2030e4c8ce8674) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c342512cc6c75ed21614611e9222582') in 0.016508 seconds
+  Import took 0.019017 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 706.884099 seconds.
+  path: Assets/Materials/Flag.mat
+  artifactKey: Guid(a863142190173134ebdfeaa4e860c5f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Flag.mat using Guid(a863142190173134ebdfeaa4e860c5f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd4188e4fa3636334a4b27a0a04c5b5a1') in 0.020361 seconds
+  Import took 0.023098 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.189645 seconds.
+  path: Assets/Materials/BLOCK parasite spwaner.mat
+  artifactKey: Guid(7c2c9e347c26a4b47b6b513ede026e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/BLOCK parasite spwaner.mat using Guid(7c2c9e347c26a4b47b6b513ede026e07) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c777f92057472311d5ad126e35b7a42') in 0.020513 seconds
+  Import took 0.023228 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000200 seconds.
+  path: Assets/Materials/Flag.mat
+  artifactKey: Guid(a863142190173134ebdfeaa4e860c5f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Flag.mat using Guid(a863142190173134ebdfeaa4e860c5f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '293592fd9e23f8e7b9dc30017bc320b9') in 0.016794 seconds
+  Import took 0.019805 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 117.685827 seconds.
+  path: Assets/Prefabs/Acid.prefab
+  artifactKey: Guid(60583c28ce1cec04ea05e55d97167d46) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Acid.prefab using Guid(60583c28ce1cec04ea05e55d97167d46) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb1a2dbfc5e1cda7f937f1598bf7ace7') in 0.030138 seconds
+  Import took 0.032911 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000207 seconds.
+  path: Assets/Prefabs/Moving Platform.prefab
+  artifactKey: Guid(f9e36be1176088343a336d08e0a867f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Moving Platform.prefab using Guid(f9e36be1176088343a336d08e0a867f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '38512e942a059f77833b44509d8436d6') in 0.017902 seconds
+  Import took 0.020717 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000272 seconds.
+  path: Assets/Prefabs/Player.prefab
+  artifactKey: Guid(70a05603022e6ee408047033f641e546) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Player.prefab using Guid(70a05603022e6ee408047033f641e546) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '227bb3d50acb7a85696904f82cebc38b') in 0.024343 seconds
+  Import took 0.026958 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000208 seconds.
+  path: Assets/Prefabs/Moving Platform.prefab
+  artifactKey: Guid(f9e36be1176088343a336d08e0a867f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Moving Platform.prefab using Guid(f9e36be1176088343a336d08e0a867f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '38512e942a059f77833b44509d8436d6') in 0.014642 seconds
+  Import took 0.017127 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000229 seconds.
+  path: Assets/Prefabs/ParasiteBlock.prefab
+  artifactKey: Guid(c964ba9e05ba95544af0a0db4fa03ebb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/ParasiteBlock.prefab using Guid(c964ba9e05ba95544af0a0db4fa03ebb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a36c8929a77d92f6d73db9a770a6e6e1') in 0.018592 seconds
+  Import took 0.021421 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000361 seconds.
+  path: Assets/Prefabs/Spikes.prefab
+  artifactKey: Guid(533033f0fce0ac844bb273c6c925a58c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Spikes.prefab using Guid(533033f0fce0ac844bb273c6c925a58c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d69c0382f018fde81ae48f7574e673f') in 0.017659 seconds
+  Import took 0.021152 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.358565 seconds.
+  path: Assets/Scenes/Platform Testing.unity
+  artifactKey: Guid(c8f02e759c62dd046ba26850ce746d6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Platform Testing.unity using Guid(c8f02e759c62dd046ba26850ce746d6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '706f91076982c75ae38eb33a50518756') in 0.008871 seconds
+  Import took 0.011336 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
