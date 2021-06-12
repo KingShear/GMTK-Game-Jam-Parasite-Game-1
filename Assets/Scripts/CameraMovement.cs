@@ -9,6 +9,8 @@ public class CameraMovement : MonoBehaviour
     private Transform cameraLookAt;
     [SerializeField]
     private Transform cameraFollow;
+    float adjustmentScale;
+    float clipMoveSpeed;
 
     private void Awake()
     {
@@ -17,7 +19,8 @@ public class CameraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        adjustmentScale = .9f;
+        clipMoveSpeed = 5f;
     }
 
     // Update is called once per frame
@@ -34,7 +37,7 @@ public class CameraMovement : MonoBehaviour
     {
         if (cameraFollow)
         {
-            transform.position = Vector3.Lerp(transform.position, cameraFollow.position, 1.2f);
+            transform.position = cameraFollow.position;
         }
         this.transform.LookAt(cameraLookAt.position);
         RaycastHit hit;
@@ -44,6 +47,7 @@ public class CameraMovement : MonoBehaviour
             {
                 //Debug.Log("HELP");
                 Vector3 newPosition = hit.point;
+                newPosition = cameraLookAt.transform.position + (newPosition - cameraLookAt.transform.position) * adjustmentScale;
                 this.transform.position = newPosition;
             }
         }
