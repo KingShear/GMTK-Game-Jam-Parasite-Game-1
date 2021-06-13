@@ -174,7 +174,9 @@ public class PlayerMovement : MonoBehaviour
         float yVel = rb.velocity.y;
         Vector3 movement = new Vector3(horizontal,0,vertical);
         movement = cameraFollow.transform.TransformDirection(movement);
-        movement = movement.normalized * speed;
+        if(dashParasiteActive) { movement = movement.normalized * speed * 2; }
+        else { movement = movement.normalized * speed; }
+        
         if (movement.magnitude > 0)
         {
             speed = 10f;

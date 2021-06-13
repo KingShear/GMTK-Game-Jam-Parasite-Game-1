@@ -30,6 +30,8 @@ public class CameraMovement : MonoBehaviour
     {
         adjustmentScale = .9f;
         clipMoveSpeed = 5f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame

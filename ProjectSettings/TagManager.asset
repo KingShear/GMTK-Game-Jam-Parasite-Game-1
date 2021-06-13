@@ -16,6 +16,8 @@ TagManager:
   - JumpJelly
   - DashJelly
   - BlockJelly
+  - Collectable
+  - EndLevel
   layers:
   - Default
   - TransparentFX
