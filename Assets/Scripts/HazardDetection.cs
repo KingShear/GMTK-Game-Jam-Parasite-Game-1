@@ -20,15 +20,15 @@ public class HazardDetection : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Collision Detected");
-        DetectedCollision(collision.transform.tag);
+        DetectedCollision(other.transform.tag);
     }
 
     void DetectedCollision(string colliderTag)
     {
-        //Debug.Log("Checking collision for " + colliderTag);
+        Debug.Log("Checking collision for " + colliderTag);
         switch(colliderTag)
         {
             case "Spikes": FellOnSpikes();break;
@@ -40,6 +40,7 @@ public class HazardDetection : MonoBehaviour
     void FellOnSpikes()
     {
         Debug.Log("Ouch I fell on the spikes!");
+        player.Respawn();
     }
     void FellOnAcid()
     {

@@ -8,7 +8,14 @@ TagManager:
   - Obstacle
   - Spikes
   - Acid
+  - Platform
+  - DeathZone
   - Moving Platform
+  - Rotating Platform
+  - Moving Platform
+  - JumpJelly
+  - DashJelly
+  - BlockJelly
   layers:
   - Default
   - TransparentFX

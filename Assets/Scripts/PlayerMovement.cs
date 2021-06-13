@@ -14,9 +14,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float speed;
     float rotationSpeed;
-    float dashSpeed = 5000.0f;
-    bool isDashing;
-    float dashTimer = 0.0f;
     Rigidbody rb;
     [SerializeField]
     Transform cameraFollow;
@@ -25,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     public bool isAttacking;
     bool isGrounded;
+    bool isOnPlatform;
+    Rigidbody platform;
     float numJumps;
     float maxJumps;
     [SerializeField]
@@ -38,10 +37,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float jumpForce = 200.0f;
 
-    //activate bools when player collides with specific powerups
-    bool speedParasite;
-    bool jumpParasite;
-    bool blockParasite;
+
+    Vector3 respawnPoint;
+
+    //PARASITE VARIABLES
+    bool dashParasiteActive;
+    bool jumpParasiteActive;
+    bool blockParasiteActive;
+    string parasite1;
+    string parasite2;
+    float dashSpeed = 5000.0f;
+    float dashTimer = 0.0f;
     public GameObject parasiteBlockPrefab;
 
     GameObject playerForwardTransform;
@@ -56,13 +62,15 @@ public class PlayerMovement : MonoBehaviour
         maxJumps = 1;
         numJumps = maxJumps;
         isAttacking = false;
-        isDashing = false;
 
-        speedParasite = false;
-        jumpParasite = false;
-        blockParasite = false;
+        dashParasiteActive = false;
+        jumpParasiteActive = false;
+        blockParasiteActive = false;
+        parasite1 = "";
+        parasite2 = "";
 
         playerForwardTransform = GameObject.Find("Visuals");
+        isOnPlatform = false;
     }
 
     // Start is called before the first frame update
@@ -86,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (isDashing)
+        if (dashParasiteActive)
         {
             Dashing();
         }
@@ -144,10 +152,9 @@ public class PlayerMovement : MonoBehaviour
             state = "running";
         }
         movement.y = yVel;
-        rb.velocity = movement;
         if(Input.GetButtonDown("Jump"))
         {
-            if(isGrounded || (numJumps > 0) )
+            if(isGrounded || isOnPlatform || (numJumps > 0) )
             {
                 if (numJumps != maxJumps)
                 {
@@ -167,12 +174,20 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            isDashing = true;
+            dashParasiteActive = true;
         }
-        if (!isGrounded)
+        if (!isGrounded || !isOnPlatform)
         {
             state = "jumping";
         }
+        if(isOnPlatform)
+        {
+            //Debug.Log(platform.velocity);
+            movement.x += platform.velocity.x;
+            movement.z += platform.velocity.z;
+            //Debug.Log(movement);
+        }
+        rb.velocity = movement;
         float mouseX = Input.GetAxisRaw("Mouse X");
         float mouseY = Input.GetAxisRaw("Mouse Y");
 
@@ -207,8 +222,48 @@ public class PlayerMovement : MonoBehaviour
     {
         if(collision.transform.tag == "Ground")
         {
-            isGrounded = true;
-            numJumps = maxJumps;
+            RaycastHit hit;
+            if (Physics.Raycast(this.transform.position + Vector3.up, Vector3.down, out hit))
+            {
+                //  Debug.Log(hit.collider.tag);
+                if (hit.collider.tag == "Ground")
+                {
+                    isGrounded = true;
+                    numJumps = maxJumps;
+                }
+            }
+        }
+
+        if (collision.transform.tag == "DashJelly")
+        {
+            Debug.Log("DASH JELLY");
+        }
+        if (collision.transform.tag == "JumpJelly")
+        {
+            Debug.Log("JUMP JELLY");
+        }
+        if (collision.transform.tag == "BlockJelly")
+        {
+            Debug.Log("BLOCK JELLY");
+        }
+
+        if (collision.transform.tag == "Platform")
+        {
+            //Debug.Log(collision.transform.tag);
+            RaycastHit hit;
+            if (Physics.Raycast(this.transform.position + Vector3.up,Vector3.down,out hit))
+            {
+                //  Debug.Log(hit.collider.tag);
+                if (hit.collider.tag == "Platform")
+                {
+                    isGrounded = true;
+                    isOnPlatform = true;
+                    platform = hit.transform.GetComponent<Rigidbody>();
+                    //  Debug.Log(isGrounded);
+                    numJumps = maxJumps;
+                    this.transform.SetParent(hit.transform);
+                }
+            }
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -218,14 +273,48 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
             numJumps--;
         }
+        if (collision.transform.tag == "Platform")
+        {
+            Debug.Log("Exited Collision of Platform");
+            isGrounded = false;
+            isOnPlatform = false;
+            platform = null;
+            numJumps--;
+            this.transform.SetParent(null);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.transform.tag == "Ground")
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(this.transform.position + Vector3.up, Vector3.down, out hit))
+            {
+                if (hit.collider.tag == "Platform" || hit.collider.tag == "Ground")
+                {
+                    respawnPoint = hit.point;
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "DeathZone")
+        {
+            Respawn();
+        }
     }
     private void Dashing()
     {
         rb.AddForce(playerForwardTransform.transform.forward * dashSpeed, ForceMode.Impulse);
 
-        isDashing = false;
-        /*Debug.Log("RBX: " + playerForwardTransform.transform.forward.x.ToString());
-        Debug.Log("RBY: " + playerForwardTransform.transform.forward.y.ToString());
-        Debug.Log("RBZ: " + playerForwardTransform.transform.forward.z.ToString());*/
+        dashParasiteActive = false;
+    }
+
+    public void Respawn()
+    {
+        this.transform.position = respawnPoint;
     }
 }
