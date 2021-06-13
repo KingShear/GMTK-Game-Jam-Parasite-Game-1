@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     *I will fix it Saturday
     * Other notes: press T to test dash (I need to lerp so player doesn't clip through walls)
     * Press B to test block creation directly under player (fix buggy running jump off of platforms)
-    * Press J to test high jump
     */ 
 
     [SerializeField]
@@ -21,8 +20,11 @@ public class PlayerMovement : MonoBehaviour
     Transform cameraRotate;
     [SerializeField]
     public bool isAttacking;
+    [SerializeField]
     bool isGrounded;
+    [SerializeField]
     bool isOnPlatform;
+    float groundDistance;
     Rigidbody platform;
     float numJumps;
     float maxJumps;
@@ -37,6 +39,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float jumpForce = 200.0f;
 
+    [SerializeField]
+    Animator playerAnim;
+
 
     Vector3 respawnPoint;
 
@@ -46,9 +51,11 @@ public class PlayerMovement : MonoBehaviour
     bool blockParasiteActive;
     string parasite1;
     string parasite2;
-    float dashSpeed = 5000.0f;
-    float dashTimer = 0.0f;
+    float dashSpeed = 10000.0f;
+    float dashDuration = 1.5f;
     public GameObject parasiteBlockPrefab;
+    public GameObject[] parasiteParticleArray; //1 = dash, 2 = jump, 3 = block
+    GameObject parasiteParticles;
 
     GameObject playerForwardTransform;
 
@@ -71,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerForwardTransform = GameObject.Find("Visuals");
         isOnPlatform = false;
+        groundDistance = 0.1f;
     }
 
     // Start is called before the first frame update
@@ -94,35 +102,23 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (dashParasiteActive)
+        if (dashParasiteActive && (Input.GetMouseButtonDown(0)))
         {
-            Dashing();
+            Dash();
         }
-        else
+        if (blockParasiteActive && (Input.GetMouseButtonDown(0)))
         {
-            dashTimer = 0.0f;
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            ParasiteBlock();
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            ParasiteJump();
+            Block();
         }
     }
 
-    void ParasiteDash()
+    private void Dash()
     {
-
+        rb.AddForce(playerForwardTransform.transform.forward * dashSpeed, ForceMode.Impulse);
     }
-    void ParasiteJump()
+    private void Block()
     {
-        jumpForce = 300.0f; //adjust as needed
-    }
-    void ParasiteBlock()
-    {
-        Vector3 blockPosition = new Vector3(this.transform.position.x, this.transform.position.y - 0.25f, this.transform.position.z);
+        Vector3 blockPosition = transform.position + (playerForwardTransform.transform.forward * 5);
         Instantiate(parasiteBlockPrefab, blockPosition, Quaternion.identity);
         parasiteBlockPrefab.tag = "Ground";
     }
@@ -146,11 +142,11 @@ public class PlayerMovement : MonoBehaviour
         {
             state = "idle";
         }
-        if (Input.GetButton("Fire3") && isGrounded)
+        /*if (Input.GetButton("Fire3") && isGrounded)
         {
             speed = 20f;
             state = "running";
-        }
+        }*/
         movement.y = yVel;
         if(Input.GetButtonDown("Jump"))
         {
@@ -168,13 +164,9 @@ public class PlayerMovement : MonoBehaviour
                 {
                     rb.AddForce(movement.normalized * jumpForce, ForceMode.Impulse);
                 }
-                
+                playerAnim.SetBool("Jumping", true);
             }
             
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            dashParasiteActive = true;
         }
         if (!isGrounded || !isOnPlatform)
         {
@@ -198,9 +190,18 @@ public class PlayerMovement : MonoBehaviour
         Quaternion localRotation = Quaternion.Euler(-rotX,rotY,0.0f);
         cameraRotate.transform.rotation = localRotation;
 
+
+        Vector3 flatMovement = new Vector3(movement.x,0,movement.z);
+        float speedAnim = flatMovement.sqrMagnitude;
+        playerAnim.SetFloat("Speed",speedAnim);
     }
 
-
+    private void ParasiteParticleEffect()
+    {
+        Vector3 particlePosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+        GameObject particleEffect = Instantiate(parasiteParticles, particlePosition, Quaternion.identity);
+        particleEffect.GetComponent<ParticleSystem>().Play();
+    }
 
     void RotateCharacter(Vector3 lookAt)
     {
@@ -230,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     isGrounded = true;
                     numJumps = maxJumps;
+                    playerAnim.SetBool("Jumping", false);
                 }
             }
         }
@@ -237,14 +239,24 @@ public class PlayerMovement : MonoBehaviour
         if (collision.transform.tag == "DashJelly")
         {
             Debug.Log("DASH JELLY");
+            dashParasiteActive = true;
+            parasiteParticles = parasiteParticleArray[0];
+            ParasiteParticleEffect();
         }
         if (collision.transform.tag == "JumpJelly")
         {
             Debug.Log("JUMP JELLY");
+            jumpParasiteActive = true;
+            jumpForce = 750.0f; //adjust as needed
+            parasiteParticles = parasiteParticleArray[1];
+            ParasiteParticleEffect();
         }
         if (collision.transform.tag == "BlockJelly")
         {
             Debug.Log("BLOCK JELLY");
+            blockParasiteActive = true;
+            parasiteParticles = parasiteParticleArray[2];
+            ParasiteParticleEffect();
         }
 
         if (collision.transform.tag == "Platform")
@@ -289,11 +301,13 @@ public class PlayerMovement : MonoBehaviour
         if(collision.transform.tag == "Ground")
         {
             RaycastHit hit;
-            if (Physics.Raycast(this.transform.position + Vector3.up, Vector3.down, out hit))
+            if (Physics.Raycast(this.transform.position + Vector3.up, Vector3.down,out hit,groundDistance))
             {
                 if (hit.collider.tag == "Platform" || hit.collider.tag == "Ground")
                 {
                     respawnPoint = hit.point;
+                    isGrounded = true;
+                    numJumps = maxJumps;
                 }
             }
         }
@@ -306,13 +320,6 @@ public class PlayerMovement : MonoBehaviour
             Respawn();
         }
     }
-    private void Dashing()
-    {
-        rb.AddForce(playerForwardTransform.transform.forward * dashSpeed, ForceMode.Impulse);
-
-        dashParasiteActive = false;
-    }
-
     public void Respawn()
     {
         this.transform.position = respawnPoint;
