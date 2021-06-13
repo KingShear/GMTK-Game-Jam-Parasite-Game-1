@@ -23,6 +23,7 @@ public class HazardDetection : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Collision Detected");
+        //Debug.Break();
         DetectedCollision(other.transform.tag);
     }
 

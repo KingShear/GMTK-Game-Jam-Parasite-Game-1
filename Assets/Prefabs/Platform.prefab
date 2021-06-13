@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 273672001480484096}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: Moving Platform
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,10 +109,10 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!114 &273672001480484096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a1dd637c6442041af4bfe0d0af0979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  platformPathStart: {fileID: 0}
+  platformPathEnd: {fileID: 0}
+  speed: 0

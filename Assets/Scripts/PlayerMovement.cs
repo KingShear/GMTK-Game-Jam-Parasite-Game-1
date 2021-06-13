@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerForwardTransform = GameObject.Find("Visuals");
         isOnPlatform = false;
-        groundDistance = 0.1f;
+        groundDistance = 1f;
     }
 
     // Start is called before the first frame update
@@ -172,7 +172,10 @@ public class PlayerMovement : MonoBehaviour
         {
             state = "jumping";
         }
-        if(isOnPlatform)
+        Vector3 flatMovement = new Vector3(movement.x, 0, movement.z);
+        float speedAnim = flatMovement.sqrMagnitude;
+        playerAnim.SetFloat("Speed", speedAnim);
+        if (isOnPlatform)
         {
             //Debug.Log(platform.velocity);
             movement.x += platform.velocity.x;
@@ -191,9 +194,7 @@ public class PlayerMovement : MonoBehaviour
         cameraRotate.transform.rotation = localRotation;
 
 
-        Vector3 flatMovement = new Vector3(movement.x,0,movement.z);
-        float speedAnim = flatMovement.sqrMagnitude;
-        playerAnim.SetFloat("Speed",speedAnim);
+        
     }
 
     private void ParasiteParticleEffect()
@@ -221,13 +222,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag == "Ground")
+        if(collision.transform.tag == "Ground" || collision.transform.tag == "Rotating Platform")
         {
             RaycastHit hit;
             if (Physics.Raycast(this.transform.position + Vector3.up, Vector3.down, out hit))
             {
                 //  Debug.Log(hit.collider.tag);
-                if (hit.collider.tag == "Ground")
+                if (hit.collider.tag == "Ground" || hit.collider.tag == "Rotating Platform")
                 {
                     isGrounded = true;
                     numJumps = maxJumps;
@@ -274,6 +275,7 @@ public class PlayerMovement : MonoBehaviour
                     //  Debug.Log(isGrounded);
                     numJumps = maxJumps;
                     this.transform.SetParent(hit.transform);
+                    playerAnim.SetBool("Jumping", false);
                 }
             }
         }
@@ -305,6 +307,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (hit.collider.tag == "Platform" || hit.collider.tag == "Ground")
                 {
+                    Debug.Log(respawnPoint);
                     respawnPoint = hit.point;
                     isGrounded = true;
                     numJumps = maxJumps;
