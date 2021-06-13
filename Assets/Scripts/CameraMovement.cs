@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
@@ -11,6 +12,14 @@ public class CameraMovement : MonoBehaviour
     private Transform cameraFollow;
     float adjustmentScale;
     float clipMoveSpeed;
+
+    [SerializeField]
+    float numParasites;
+    [SerializeField]
+    float fadeDuration;
+    [SerializeField]
+    AudioMixer mixer;
+
 
     private void Awake()
     {
@@ -27,6 +36,24 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         CameraMove();
+        if(numParasites == 0)
+        {
+            StopAllCoroutines();
+            StartCoroutine(VolumeAdjuster.StartFade(mixer, "Variant1Volume", fadeDuration, 0f));
+            StartCoroutine(VolumeAdjuster.StartFade(mixer, "Variant2Volume", fadeDuration, 0f));
+        }
+        if(numParasites == 1)
+        {
+            StopAllCoroutines();
+            StartCoroutine(VolumeAdjuster.StartFade(mixer, "Variant1Volume", fadeDuration, 1f));
+            StartCoroutine(VolumeAdjuster.StartFade(mixer, "Variant2Volume", fadeDuration, 0f));
+        }
+        if(numParasites == 2)
+        {
+            StopAllCoroutines();
+            StartCoroutine(VolumeAdjuster.StartFade(mixer, "Variant1Volume", fadeDuration, 1f));
+            StartCoroutine(VolumeAdjuster.StartFade(mixer, "Variant2Volume", fadeDuration, 1f));
+        }
     }
 
     private void FixedUpdate()
@@ -41,7 +68,7 @@ public class CameraMovement : MonoBehaviour
         }
         this.transform.LookAt(cameraLookAt.position);
         RaycastHit hit;
-        if (Physics.Raycast(cameraLookAt.transform.position, (this.transform.position - cameraLookAt.transform.position).normalized,out hit,Vector3.Distance(this.transform.position,cameraLookAt.transform.position)))
+        if (Physics.Raycast(cameraLookAt.transform.position, (this.transform.position - cameraLookAt.transform.position).normalized, out hit, Vector3.Distance(this.transform.position, cameraLookAt.transform.position)))
         {
             if (hit.transform.tag != "Player")
             {

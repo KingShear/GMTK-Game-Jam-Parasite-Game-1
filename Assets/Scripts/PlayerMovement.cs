@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    /*yo zeldatechie: please ignore the crappy physics code for the parasite effects so far, thanks
-    *I will fix it Saturday
-    * Other notes: press T to test dash (I need to lerp so player doesn't clip through walls)
-    * Press B to test block creation directly under player (fix buggy running jump off of platforms)
-    */ 
+    //TODO:
+    /* dash: lerp smoothly
+     * block: add final block asset
+     * jump: [DONE]
+     * dash + jump: [DONE]
+     * block + jump: [DONE]
+     * dash + block: [DONE]
+     */
 
     [SerializeField]
     float speed;
@@ -49,13 +52,23 @@ public class PlayerMovement : MonoBehaviour
     bool dashParasiteActive;
     bool jumpParasiteActive;
     bool blockParasiteActive;
-    string parasite1;
-    string parasite2;
+
+    const float parasiteTimer = 30.0f;
+    float dashParasiteTimer;
+    float jumpParasiteTimer;
+    float blockParasiteTimer;
+
+    string parasiteOld;
+    string parasiteNew;
     float dashSpeed = 10000.0f;
     float dashDuration = 1.5f;
     public GameObject parasiteBlockPrefab;
+    GameObject prevSpawnedBlock;
+    GameObject nextSpawnedBlock;
+    bool isBlockSpawned = false;
     public GameObject[] parasiteParticleArray; //1 = dash, 2 = jump, 3 = block
     GameObject parasiteParticles;
+
 
     GameObject playerForwardTransform;
 
@@ -71,10 +84,13 @@ public class PlayerMovement : MonoBehaviour
         isAttacking = false;
 
         dashParasiteActive = false;
+        dashParasiteTimer = parasiteTimer;
         jumpParasiteActive = false;
+        jumpParasiteTimer = parasiteTimer;
         blockParasiteActive = false;
-        parasite1 = "";
-        parasite2 = "";
+        blockParasiteTimer = parasiteTimer;
+        parasiteOld = "";
+        parasiteNew = "";
 
         playerForwardTransform = GameObject.Find("Visuals");
         isOnPlatform = false;
@@ -95,32 +111,59 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (!isAttacking)
         {
             Move();
         }
 
-
+        ParasiteTimers();
         if (dashParasiteActive && (Input.GetMouseButtonDown(0)))
         {
             Dash();
         }
         if (blockParasiteActive && (Input.GetMouseButtonDown(0)))
         {
+            isBlockSpawned = true;
             Block();
         }
     }
 
     private void Dash()
     {
-        rb.AddForce(playerForwardTransform.transform.forward * dashSpeed, ForceMode.Impulse);
+        //grounded dash
+        if ((state == "running" || state == "walking") && (isGrounded || isOnPlatform))
+        {
+            if(blockParasiteActive)
+            {
+                rb.AddForce(playerForwardTransform.transform.up * 500, ForceMode.Impulse);
+            }
+            rb.AddForce(playerForwardTransform.transform.forward * dashSpeed, ForceMode.Impulse);
+        }
+            
     }
     private void Block()
     {
-        Vector3 blockPosition = transform.position + (playerForwardTransform.transform.forward * 5);
-        Instantiate(parasiteBlockPrefab, blockPosition, Quaternion.identity);
+        Vector3 blockPosition;
+        Vector3 loweredPos = new Vector3(transform.position.x, transform.position.y - 0.25f, transform.position.z);
         parasiteBlockPrefab.tag = "Ground";
+        if (!jumpParasiteActive)
+        {
+            blockPosition = loweredPos + (playerForwardTransform.transform.forward * 5);
+        } else
+        {
+            blockPosition = loweredPos;
+        }
+        
+        if (isBlockSpawned)
+        {
+            //set prevBlockSpawned to nextSpawnedBlock
+            prevSpawnedBlock = nextSpawnedBlock;
+            nextSpawnedBlock = (GameObject)Instantiate(parasiteBlockPrefab, blockPosition, Quaternion.identity);
+            Destroy(prevSpawnedBlock);
+            //set nextBlockSpawned to instantiated block
+        } else {
+            nextSpawnedBlock = (GameObject)Instantiate(parasiteBlockPrefab, blockPosition, Quaternion.identity);
+        }
     }
 
     void Move()
@@ -168,7 +211,8 @@ public class PlayerMovement : MonoBehaviour
             }
             
         }
-        if (!isGrounded || !isOnPlatform)
+
+        if (!isGrounded && !isOnPlatform)
         {
             state = "jumping";
         }
@@ -192,9 +236,6 @@ public class PlayerMovement : MonoBehaviour
         rotX = Mathf.Clamp(rotX, clampAngleMin, clampAngleMax);
         Quaternion localRotation = Quaternion.Euler(-rotX,rotY,0.0f);
         cameraRotate.transform.rotation = localRotation;
-
-
-        
     }
 
     private void ParasiteParticleEffect()
@@ -241,6 +282,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("DASH JELLY");
             dashParasiteActive = true;
+            SwitchParasites("DASH");
             parasiteParticles = parasiteParticleArray[0];
             ParasiteParticleEffect();
         }
@@ -248,6 +290,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("JUMP JELLY");
             jumpParasiteActive = true;
+            SwitchParasites("JUMP");
             jumpForce = 750.0f; //adjust as needed
             parasiteParticles = parasiteParticleArray[1];
             ParasiteParticleEffect();
@@ -256,6 +299,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("BLOCK JELLY");
             blockParasiteActive = true;
+            SwitchParasites("BLOCK");
             parasiteParticles = parasiteParticleArray[2];
             ParasiteParticleEffect();
         }
@@ -307,8 +351,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (hit.collider.tag == "Platform" || hit.collider.tag == "Ground")
                 {
-                    Debug.Log(respawnPoint);
-                    respawnPoint = hit.point;
+                    //Debug.Log(respawnPoint);
+                    respawnPoint = hit.point +  (Vector3.up * .1f);
                     isGrounded = true;
                     numJumps = maxJumps;
                 }
@@ -326,5 +370,64 @@ public class PlayerMovement : MonoBehaviour
     public void Respawn()
     {
         this.transform.position = respawnPoint;
+    }
+    void ParasiteTimers()
+    {
+        if (dashParasiteActive)
+        {
+            dashParasiteTimer -= Time.deltaTime;
+            if (dashParasiteTimer <= 0.0f)
+            {
+                dashParasiteActive = false;
+                dashParasiteTimer = parasiteTimer;
+                if (parasiteNew == "DASH") { parasiteNew = ""; }
+                else if (parasiteOld == "DASH") { parasiteOld = ""; }
+            }
+        }
+        if (jumpParasiteActive)
+        {
+            jumpParasiteTimer -= Time.deltaTime;
+            if (jumpParasiteTimer <= 0.0f)
+            {
+                jumpParasiteActive = false;
+                jumpForce = 200.0f;
+                jumpParasiteTimer = parasiteTimer;
+                if (parasiteNew == "JUMP") { parasiteNew = ""; }
+                else if (parasiteOld == "JUMP") { parasiteOld = ""; }
+            }
+        }
+        if (blockParasiteActive)
+        {
+            blockParasiteTimer -= Time.deltaTime;
+            if (blockParasiteTimer <= 0.0f)
+            {
+                blockParasiteActive = false;
+                blockParasiteTimer = parasiteTimer;
+                if (parasiteNew == "BLOCK") { parasiteNew = ""; }
+                else if (parasiteOld == "BLOCK") { parasiteOld = ""; }
+            }
+        }
+    }
+    void SwitchParasites(string currentParasite)
+    {
+        if (currentParasite == "DASH" && dashParasiteActive) 
+        { 
+            dashParasiteTimer = parasiteTimer; 
+            parasiteOld = parasiteNew;
+            parasiteNew = currentParasite;
+        } else if (currentParasite == "JUMP" && jumpParasiteActive) { 
+            jumpParasiteTimer = parasiteTimer;
+            parasiteOld = parasiteNew;
+            parasiteNew = currentParasite;
+        } else if (currentParasite == "BLOCK" && blockParasiteActive) { 
+            blockParasiteTimer = parasiteTimer;
+            parasiteOld = parasiteNew;
+            parasiteNew = currentParasite;
+        } else {
+            parasiteOld = parasiteNew;
+            parasiteNew = currentParasite;
+        }
+
+        Debug.Log("Old and new parasite(s): " + parasiteOld + " " + parasiteNew);
     }
 }
