@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Collectables : MonoBehaviour
 {
-
-    float numCollectables;
+    public Text partsText;
+    int numCollectables;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +17,7 @@ public class Collectables : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        partsText.text = numCollectables.ToString();
     }
 
     private void OnTriggerEnter(Collider other)

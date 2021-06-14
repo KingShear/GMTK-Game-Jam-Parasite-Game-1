@@ -1,18 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //TODO:
-    /* dash: lerp smoothly
-     * block: add final block asset
-     * jump: [DONE]
-     * dash + jump: [DONE]
-     * block + jump: [DONE]
-     * dash + block: [DONE]
-     */
-
     [SerializeField]
     float speed;
     float rotationSpeed;
@@ -40,10 +32,13 @@ public class PlayerMovement : MonoBehaviour
     float rotY = 0.0f;
     float rotX = 0.0f;
     [SerializeField]
-    float jumpForce = 200.0f;
+    float jumpForce = 400.0f;
 
     [SerializeField]
     Animator playerAnim;
+
+    [SerializeField]
+    GameObject shadow;
 
 
     Vector3 respawnPoint;
@@ -59,7 +54,12 @@ public class PlayerMovement : MonoBehaviour
     float blockParasiteTimer;
 
     string parasiteOld;
+    public Image parasiteOldImage;
     string parasiteNew;
+    public Image parasiteNewImage;
+    public Sprite[] parasiteImages;
+    public Sprite emptyImage;
+
     float dashSpeed = 10000.0f;
     float dashDuration = 1.5f;
     public GameObject parasiteBlockPrefab;
@@ -68,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
     bool isBlockSpawned = false;
     public GameObject[] parasiteParticleArray; //1 = dash, 2 = jump, 3 = block
     GameObject parasiteParticles;
-
 
     GameObject playerForwardTransform;
 
@@ -89,7 +88,9 @@ public class PlayerMovement : MonoBehaviour
         jumpParasiteTimer = parasiteTimer;
         blockParasiteActive = false;
         blockParasiteTimer = parasiteTimer;
+        parasiteOldImage.sprite = emptyImage;
         parasiteOld = "";
+        parasiteNewImage.sprite = emptyImage;
         parasiteNew = "";
 
         playerForwardTransform = GameObject.Find("Visuals");
@@ -126,6 +127,20 @@ public class PlayerMovement : MonoBehaviour
             isBlockSpawned = true;
             Block();
         }
+
+        //shadow
+        RaycastHit hit;
+        if (Physics.Raycast(this.transform.position + Vector3.up, Vector3.down, out hit, 10f))
+        {
+            shadow.SetActive(true);
+            shadow.transform.position = hit.point + Vector3.up * 0.01f;
+            shadow.transform.forward = -hit.normal;
+        }
+        else
+        {
+            shadow.SetActive(false);
+        }
+
     }
 
     private void Dash()
@@ -382,8 +397,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 dashParasiteActive = false;
                 dashParasiteTimer = parasiteTimer;
-                if (parasiteNew == "DASH") { parasiteNew = ""; }
-                else if (parasiteOld == "DASH") { parasiteOld = ""; }
+                if (parasiteNew == "DASH") 
+                { 
+                    parasiteNew = "";
+                    parasiteNewImage.sprite = emptyImage;
+                } else if (parasiteOld == "DASH") { 
+                    parasiteOld = "";
+                    parasiteOldImage.sprite = emptyImage;
+                }
             }
         }
         if (jumpParasiteActive)
@@ -392,10 +413,16 @@ public class PlayerMovement : MonoBehaviour
             if (jumpParasiteTimer <= 0.0f)
             {
                 jumpParasiteActive = false;
-                jumpForce = 200.0f;
+                jumpForce = 400.0f;
                 jumpParasiteTimer = parasiteTimer;
-                if (parasiteNew == "JUMP") { parasiteNew = ""; }
-                else if (parasiteOld == "JUMP") { parasiteOld = ""; }
+                if (parasiteNew == "JUMP") 
+                { 
+                    parasiteNew = "";
+                    parasiteNewImage.sprite = emptyImage;
+                } else if (parasiteOld == "JUMP") { 
+                    parasiteOld = "";
+                    parasiteOldImage.sprite = emptyImage;
+                }
             }
         }
         if (blockParasiteActive)
@@ -405,8 +432,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 blockParasiteActive = false;
                 blockParasiteTimer = parasiteTimer;
-                if (parasiteNew == "BLOCK") { parasiteNew = ""; }
-                else if (parasiteOld == "BLOCK") { parasiteOld = ""; }
+                if (parasiteNew == "BLOCK") 
+                { 
+                    parasiteNew = "";
+                    parasiteNewImage.sprite = emptyImage;
+                } else if (parasiteOld == "BLOCK") { 
+                    parasiteOld = "";
+                    parasiteOldImage.sprite = emptyImage;
+                }
             }
         }
     }
@@ -417,14 +450,20 @@ public class PlayerMovement : MonoBehaviour
             dashParasiteTimer = parasiteTimer; 
             parasiteOld = parasiteNew;
             parasiteNew = currentParasite;
+            parasiteOldImage.sprite = parasiteNewImage.sprite;
+            parasiteNewImage.sprite = parasiteImages[0];
         } else if (currentParasite == "JUMP" && jumpParasiteActive) { 
             jumpParasiteTimer = parasiteTimer;
             parasiteOld = parasiteNew;
             parasiteNew = currentParasite;
+            parasiteOldImage.sprite = parasiteNewImage.sprite;
+            parasiteNewImage.sprite = parasiteImages[1];
         } else if (currentParasite == "BLOCK" && blockParasiteActive) { 
             blockParasiteTimer = parasiteTimer;
             parasiteOld = parasiteNew;
             parasiteNew = currentParasite;
+            parasiteOldImage.sprite = parasiteNewImage.sprite;
+            parasiteNewImage.sprite = parasiteImages[2];
         } else {
             parasiteOld = parasiteNew;
             parasiteNew = currentParasite;
